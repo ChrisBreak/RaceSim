@@ -12,13 +12,13 @@
 
  */
 
-
+import java.util.Random;
 
 public class Track {
 
     public static final int SIZE = 25;
     private Car [] aTrack;
-
+    protected boolean weatherCondition = false;
 
     // Create the track and initialize all elements to sensible default values.
 
@@ -138,4 +138,16 @@ public class Track {
 
             return false;
     }
+
+    public void setWeather() {
+        Random generator = new Random();
+        int probs;
+        probs = generator.nextInt(100);
+        if ((probs >= 0) && (probs < 10))
+            weatherCondition = true;
+
+        else
+            weatherCondition = false;
+    }
+
 }
