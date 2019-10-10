@@ -54,42 +54,7 @@ public class GameController
                 System.out.println("SPorts location: " + sportsLocation + "\tFuel: " + sportsCar.getFuel());
             }
 
-
-            //Both cars location at the end space, or user chose to quit early.
-            if ((theArctic.isWon()) && (theDesert.isWon()) || (selection == 'q'))
-            {
-                System.out.println("The race is a draw.");
-                showTracks();
-                selection = 'q';
-                racePane.setRaceTie(true);
-            }
-
-            //SUV at the end first.
-            else if (theArctic.isWon())
-            {
-                System.out.println("The SUV car has won the race.");
-                showTracks();
-                selection = 'q';
-                racePane.setSUVWin(true);
-            }
-
-            //Sports car at the end first.
-            else if (theDesert.isWon())
-            {
-                System.out.println("The Sports car has won the race.");
-                showTracks();
-                selection = 'q';
-                racePane.setSportsWin(true);
-            }
-
-            //Both cars out of fuel before the end.
-            else if ((suvCar.getFuel() == 0) && (sportsCar.getFuel() == 0))
-            {
-                System.out.println("Both cars ran out of fuel, the race is a draw.");
-                showTracks();
-                selection = 'q';
-                racePane.setRaceTie(true);
-            }
+            checkPossibleOutcome();
 
             if (Debug.on)
                 System.out.println("Selection is 'q' if one outcome chosen: " + selection);
@@ -443,5 +408,43 @@ public class GameController
             System.out.println("Creating a heat wave on the Desert track...");
             theDesert.setWeatherCondition(true);
         }
+    }
+
+    private void checkPossibleOutcome() {
+      //Both cars location at the end space, or user chose to quit early.
+      if ((theArctic.isWon()) && (theDesert.isWon()) || (selection == 'q'))
+      {
+          System.out.println("The race is a draw.");
+          showTracks();
+          selection = 'q';
+          racePane.setRaceTie(true);
+      }
+
+      //SUV at the end first.
+      else if (theArctic.isWon())
+      {
+          System.out.println("The SUV car has won the race.");
+          showTracks();
+          selection = 'q';
+          racePane.setSUVWin(true);
+      }
+
+      //Sports car at the end first.
+      else if (theDesert.isWon())
+      {
+          System.out.println("The Sports car has won the race.");
+          showTracks();
+          selection = 'q';
+          racePane.setSportsWin(true);
+      }
+
+      //Both cars out of fuel before the end.
+      else if ((suvCar.getFuel() == 0) && (sportsCar.getFuel() == 0))
+      {
+          System.out.println("Both cars ran out of fuel, the race is a draw.");
+          showTracks();
+          selection = 'q';
+          racePane.setRaceTie(true);
+      }
     }
 }
