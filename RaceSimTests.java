@@ -15,8 +15,6 @@ import org.junit.runner.notification.Failure;
 public class RaceSimTests {
 
   private Track simpleTrack = new Track();
-  private ArcticTrack arcticTrack = new ArcticTrack();
-  private DesertTrack desertTrack = new DesertTrack();
   private Car aCar = new Car();
   private SUV suv = new SUV();
   private Sports sportsCar = new Sports();
@@ -24,11 +22,14 @@ public class RaceSimTests {
   @Test
   public void testIsWonWithSetLocation() {
     simpleTrack.setLocation(aCar, Track.SIZE - 1);
-    arcticTrack.setLocation(aCar, Track.SIZE - 1);
-    desertTrack.setLocation(aCar, Track.SIZE - 1);
     assertTrue("\ntestIsWonWithSetLocation() for Track.", simpleTrack.isWon());
-    assertTrue("\ntestIsWonWithSetLocation() for ArcticTrack.", arcticTrack.isWon());
-    assertTrue("\ntestIsWonWithSetLocation() for DesertTrack.", desertTrack.isWon());
+  }
+
+  @Test
+  public void testTrackWeatherMethods() {
+    assertFalse("\ntestTrackWeatherMethods(), initial weather false", simpleTrack.getWeatherCondition());
+    simpleTrack.setWeatherCondition(true);
+    assertTrue("\ntestTrackWeatherMethods(), weatherCondition true", simpleTrack.getWeatherCondition());
   }
 
   @Test
