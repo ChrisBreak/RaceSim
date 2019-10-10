@@ -8,7 +8,8 @@
  Features:
  * Stores and tracks all information associated with a racetrack.
 
-
+ Edited by Cristhian Sotelo
+ for CPSC501 FALL 2019 U of C
 
  */
 
@@ -28,6 +29,7 @@ public class Track {
         aTrack = new Car[SIZE];
         for (c = 0; c < SIZE; c++)
             aTrack[c] = null;
+        createWeather();
     }
 
     // Displays the track with a numbered grid around element element.
@@ -139,7 +141,7 @@ public class Track {
             return false;
     }
 
-    public void setWeather() {
+    public void createWeather() {
         Random generator = new Random();
         int probs;
         probs = generator.nextInt(100);
@@ -148,6 +150,14 @@ public class Track {
 
         else
             weatherCondition = false;
+    }
+
+    public boolean getWeatherCondition() {
+        return(weatherCondition);
+    }
+
+    public void setWeatherCondition(boolean state) {
+        weatherCondition = state;
     }
 
 }
