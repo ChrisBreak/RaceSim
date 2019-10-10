@@ -6,6 +6,7 @@
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 import org.junit.Test;
 
 import org.junit.runner.JUnitCore;
@@ -27,7 +28,8 @@ public class RaceSimTests {
 
   @Test
   public void testTrackWeatherMethods() {
-    assertFalse("\ntestTrackWeatherMethods(), initial weather false", simpleTrack.getWeatherCondition());
+    simpleTrack.setWeatherCondition(false);
+    assertFalse("\ntestTrackWeatherMethods(), weatherCondition false", simpleTrack.getWeatherCondition());
     simpleTrack.setWeatherCondition(true);
     assertTrue("\ntestTrackWeatherMethods(), weatherCondition true", simpleTrack.getWeatherCondition());
   }
