@@ -22,6 +22,7 @@ public class GameController
     private String cheatSelection;
     private MyFrame raceFrame = new MyFrame();
     private MyPane racePane = new MyPane();
+    private InfoPrinter infoPrint = new InfoPrinter();
 
 
 
@@ -115,27 +116,7 @@ public class GameController
 
     private void initialize()
     {
-        System.out.println("\nRacing Game Simulator.\n");
-        System.out.println("There are two tracks displayed, an Arctic track, and a Desert track,");
-        System.out.println("each with a car.  The cars take turns to move along the tracks.");
-        System.out.println("Whichever car reaches the end first wins the race, if both cars reach");
-        System.out.println("the end on the same turn, run out of fuel, or the simulation is ended");
-        System.out.println("before the race is over, the race is a draw.\n");
-        System.out.println("The Arctic track contains an SUV car that has two driving modes,");
-        System.out.println("normal, and AWD (all wheel drive).  There's a 10% chance that a blizzard");
-        System.out.println("could hit the Arctic track. If the SUV is on AWD mode it will move one");
-        System.out.println("space even through the blizzard, but on normal mode it will be stuck on");
-        System.out.println("the same space and use the same amount of fuel.\n");
-        System.out.println("The Desert track contains a Sports car that only has one driving mode,");
-        System.out.println("but can move a longer distance than the SUV.  There's a 10% chance of a");
-        System.out.println("heat wave hitting the Desert track, if this happens, the Sport car will");
-        System.out.println("use double the amount of fuel, but move the same distance.\n");
-        System.out.println("There's a cheat menu (enter 'c') with options available to manipulate the");
-        System.out.println("conditions of the race.  However, the SUV turn can't be used to create a");
-        System.out.println("blizzard on the Arctic track, and similarly the Sports car turn can't be");
-        System.out.println("used to create a heat wave on the Desert trak.  Using the cheat menu will");
-        System.out.println("use up the car's turn to move.\n");
-        System.out.println("Let the race begin!!!");
+        infoPrint.printInstructions();
 
         theArctic.setLocation(suvCar, suvLocation);
         theArctic.createWeather();
@@ -168,10 +149,7 @@ public class GameController
 
     private void suvMenu()
     {
-        System.out.println("\nSUV driving options: ");
-        System.out.println("(a)ll wheel drive mode.");
-        System.out.println("(d)rive normally.");
-        System.out.println("(q)uit game.");
+        infoPrint.printSUVMenu();
         setSelection();
 
         if ((selection == 'a') || (selection == 'd'))
@@ -208,7 +186,7 @@ public class GameController
 
         else if (selection == 'c')
         {
-            showCheats();
+            infoPrint.printCheatMenu();
             setCheatSelection();
 
             if (cheatSelection.equals("5")) //Condition to prevent SUV from sabotaging its own track.
@@ -229,10 +207,7 @@ public class GameController
 
     private void sportsMenu()
     {
-        System.out.println("\nSports car driving options: ");
-        System.out.println("(d)rive normally.");
-        System.out.println("(q)uit game.");
-
+        infoPrint.printSportsMenu();
 
         /* Since the user input method is the same for both cars, this loop
          prevents the AWD to be chosen for the Sports car. */
@@ -275,7 +250,7 @@ public class GameController
 
         else if (selection == 'c')
         {
-            showCheats();
+            infoPrint.printCheatMenu();
             setCheatSelection();
 
             if (cheatSelection.equals("6"))
@@ -320,22 +295,6 @@ public class GameController
 
         if (selection == 'q')
             System.out.println("Quitting the game before the race is over...");
-    }
-
-
-
-    //Method to display cheats menu.
-    private void showCheats()
-    {
-        System.out.println("\nCHEAT MENU OPTIONS");
-        System.out.println("(0) Toggle debugging mode on/off.");
-        System.out.println("(1) Change fuel of sports car.");
-        System.out.println("(2) Change fuel of SUV car.");
-        System.out.println("(3) Change location of sports car.");
-        System.out.println("(4) Change location of SUV car.");
-        System.out.println("(5) Create a blizzard in the arctic track.");
-        System.out.println("(6) Create a heat wave in the desert track.");
-
     }
 
 
