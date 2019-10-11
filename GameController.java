@@ -20,9 +20,9 @@ public class GameController
     private int sportsLocation = 0;
     private char selection;
     private String cheatSelection;
-    private MyFrame raceFrame = new MyFrame();
-    private MyPane racePane = new MyPane();
+    private GraphicComponent simGraphics = new GraphicComponent();
     private InfoPrinter infoPrint = new InfoPrinter();
+    private boolean debugON = false;
 
 
 
@@ -32,9 +32,6 @@ public class GameController
     public GameController()
     {
         initialize();
-
-        raceFrame.add(racePane);
-        raceFrame.setVisible(true);
 
         do {
             showTracks();
@@ -47,7 +44,7 @@ public class GameController
                 if (sportsCar.getFuel() > 0)
                     sportsMenu();
 
-            if (Debug.on)
+            if (debugON)
             {
                 System.out.println("\nCar menus executed, outcome to be chosen.");
                 System.out.println("SUV location: " + suvLocation + "\tFuel: " + suvCar.getFuel());
@@ -56,7 +53,7 @@ public class GameController
 
             checkPossibleOutcome();
 
-            if (Debug.on)
+            if (debugON)
                 System.out.println("Selection is 'q' if one outcome chosen: " + selection);
 
         } while (selection != 'q');
@@ -70,8 +67,7 @@ public class GameController
             System.out.println("Pause interrupted.");
         }
 
-        raceFrame.setVisible(false);
-        raceFrame.dispose();
+        simGraphics.dispose();
     }
 
 
@@ -88,7 +84,7 @@ public class GameController
         theDesert.setLocation(sportsCar, sportsLocation);
         theDesert.createWeather();
 
-        if (Debug.on)
+        if (debugON)
         {
             System.out.print("Blizzard: " + theArctic.getWeatherCondition());
             System.out.println("\tHeat Wave: " + theDesert.getWeatherCondition());
@@ -122,7 +118,7 @@ public class GameController
             suvCar.setMode(selection);
             theArctic.setLocation(null, suvLocation); //Previous location of SUV set to null.
 
-            racePane.setBlizzard(theArctic.getWeatherCondition());
+            simGraphics.setBlizzard(theArctic.getWeatherCondition());
 
             if (theArctic.getWeatherCondition())
                 System.out.println("A blizzard has hit the Arctic track.");
@@ -134,15 +130,15 @@ public class GameController
             {
                 suvLocation = Track.SIZE - 1;
 
-                if (Debug.on)
+                if (debugON)
                     System.out.println("Array index out of bounds, index set to " + suvLocation);
             }
 
             theArctic.setLocation(suvCar, suvLocation); //SUV put in the new location.
-            racePane.moveSUV(suvLocation);
+            simGraphics.moveSUV(suvLocation);
             theArctic.createWeather(); //Track weather set for next turn.
 
-            if (Debug.on)
+            if (debugON)
                 System.out.println("Blizzard for next turn: " + theArctic.getWeatherCondition());
 
             if (suvCar.isEmpty())
@@ -158,7 +154,7 @@ public class GameController
             {
                 theArctic.createWeather();
 
-                if (Debug.on)
+                if (debugON)
                     System.out.println("Sabotage tried.  Random blizzard: " + theArctic.getWeatherCondition());
             }
         }
@@ -187,7 +183,7 @@ public class GameController
         {
             theDesert.setLocation(null, sportsLocation);
 
-            racePane.setHeat(theDesert.getWeatherCondition());
+            simGraphics.setHeat(theDesert.getWeatherCondition());
 
             if (theDesert.getWeatherCondition())
                 System.out.println("A heat wave has hit the Desert track.");
@@ -198,15 +194,15 @@ public class GameController
             {
                 sportsLocation = Track.SIZE - 1;
 
-                if (Debug.on)
+                if (debugON)
                     System.out.println("Array index out of bounds, index set to " + sportsLocation);
             }
 
             theDesert.setLocation(sportsCar, sportsLocation);
-            racePane.moveSports(sportsLocation);
+            simGraphics.moveSports(sportsLocation);
             theDesert.createWeather();
 
-            if (Debug.on)
+            if (debugON)
                 System.out.println("Heat for next turn: " + theDesert.getWeatherCondition());
 
             if (sportsCar.isEmpty())
@@ -222,7 +218,7 @@ public class GameController
             {
                 theDesert.createWeather();
 
-                if (Debug.on)
+                if (debugON)
                     System.out.println("Sabotage tried.  Random heat: " + theDesert.getWeatherCondition());
             }
         }
@@ -310,15 +306,15 @@ public class GameController
     //Method to toggle Debug mode.
     private void caseDebug()
     {
-        if (Debug.on == false)
+        if (!debugON)
         {
-            Debug.on = true;
+            debugON = true;
             System.out.println("Debugging mode ON.");
         }
 
         else
         {
-            Debug.on = false;
+            debugON = false;
             System.out.println("Debugging mode OFF.");
         }
     }
@@ -375,7 +371,7 @@ public class GameController
 
             theDesert.setLocation(sportsCar, newLocation);
             sportsLocation = newLocation;
-            racePane.moveSports(newLocation);
+            simGraphics.moveSports(newLocation);
         }
 
         else if (cheatSelection.equals("4"))
@@ -389,7 +385,7 @@ public class GameController
 
             theArctic.setLocation(suvCar, newLocation);
             suvLocation = newLocation;
-            racePane.moveSUV(newLocation);
+            simGraphics.moveSUV(newLocation);
         }
     }
 
@@ -417,7 +413,7 @@ public class GameController
           System.out.println("The race is a draw.");
           showTracks();
           selection = 'q';
-          racePane.setRaceTie(true);
+          simGraphics.setRaceTie(true);
       }
 
       //SUV at the end first.
@@ -426,7 +422,7 @@ public class GameController
           System.out.println("The SUV car has won the race.");
           showTracks();
           selection = 'q';
-          racePane.setSUVWin(true);
+          simGraphics.setSUVWin(true);
       }
 
       //Sports car at the end first.
@@ -435,7 +431,7 @@ public class GameController
           System.out.println("The Sports car has won the race.");
           showTracks();
           selection = 'q';
-          racePane.setSportsWin(true);
+          simGraphics.setSportsWin(true);
       }
 
       //Both cars out of fuel before the end.
@@ -444,7 +440,7 @@ public class GameController
           System.out.println("Both cars ran out of fuel, the race is a draw.");
           showTracks();
           selection = 'q';
-          racePane.setRaceTie(true);
+          simGraphics.setRaceTie(true);
       }
     }
 }
